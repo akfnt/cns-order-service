@@ -15,7 +15,7 @@ public record Order(
 
         String bookIsbn,
         String bookName,
-        String bookPrice,
+        Double bookPrice,
         Integer quantity,
         OrderStatus status,
 
@@ -27,7 +27,7 @@ public record Order(
         @Version
         int version
 ) {
-    public static Order of(String bookIbsn, String bookName, String bookPrice, Integer quantity, OrderStatus status) {
+    public static Order of(String bookIbsn, String bookName, Double bookPrice, Integer quantity, OrderStatus status) {
         return new Order(null, bookIbsn, bookName, bookPrice, quantity, status,  null, null, 0);
     }
 }

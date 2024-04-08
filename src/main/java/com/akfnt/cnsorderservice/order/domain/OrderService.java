@@ -1,15 +1,19 @@
 package com.akfnt.cnsorderservice.order.domain;
 
+import com.akfnt.cnsorderservice.book.Book;
+import com.akfnt.cnsorderservice.book.BookClient;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
 public class OrderService {
+    private final BookClient bookClient;
     private final OrderRepository orderRepository;
 
 
-    public OrderService(OrderRepository orderRepository) {
+    public OrderService(BookClient bookClient, OrderRepository orderRepository) {
+        this.bookClient = bookClient;
         this.orderRepository = orderRepository;
     }
 
@@ -18,10 +22,15 @@ public class OrderService {
     }
 
     public Mono<Order> submitOrder(String isbn, int quantity) {
-        return Mono.just(buildRejectedOrder(isbn, quantity))
+        return bookClient.getBookByIsbn(isbn)
+                .map(book -> buildAcceptedOrder(book, quantity))
+                .defaultIfEmpty(buildRejectedOrder(isbn, quantity))     // 책이 카탈로그에 존재하지 않으면 주문을 거부한다
                 .flatMap(orderRepository::save);
     }
 
+    public static Order buildAcceptedOrder(Book book, int quantity) {
+        return Order.of(book.isbn(), book.title() + "-" + book.author(), book.price(), quantity, OrderStatus.ACCEPTED);
+    }
     public static Order buildRejectedOrder(String bookIsbn, int quantity) {
         return Order.of(bookIsbn, null, null, quantity, OrderStatus.REJECTED);
     }
