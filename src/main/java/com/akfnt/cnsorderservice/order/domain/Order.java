@@ -13,7 +13,7 @@ public record Order(
         @Id
         Long id,
 
-        String bookIbsn,
+        String bookIsbn,
         String bookName,
         String bookPrice,
         Integer quantity,
