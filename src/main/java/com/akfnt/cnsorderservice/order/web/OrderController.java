@@ -2,10 +2,8 @@ package com.akfnt.cnsorderservice.order.web;
 
 import com.akfnt.cnsorderservice.order.domain.Order;
 import com.akfnt.cnsorderservice.order.domain.OrderService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -24,7 +22,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public Mono<Order> submitOrder(OrderRequest orderRequest) {
+    public Mono<Order> submitOrder(@RequestBody @Valid OrderRequest orderRequest) {
         return orderService.submitOrder(orderRequest.isbn(), orderRequest.quantity());
     }
 }
