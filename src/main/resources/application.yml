@@ -18,3 +18,7 @@ spring:
       max-create-connection-time: 2s    # 풀에서 연결 객체 하나를 얻을 때까지 기다릴 수 있는 최대한의 시간
       initial-size: 5
       max-size: 10
+  flyway:                               # 플라이웨이가 아직 R2DBC를 지원하지 않기 때문에 JDBC 드라이버를 통해 연결하도록 하기 위한 설정
+    user: ${spring.r2dbc.username}
+    password: ${spring.r2dbc.password}
+    url: jdbc:postgresql://localhost:5432/polardb_order
