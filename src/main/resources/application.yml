@@ -10,3 +10,11 @@ spring:
     name: cns-order-service
   lifecycle:
     timeout-per-shutdown-phase: 15s     # 15초간의 우아한 종료기간을 둔다
+  r2dbc:
+    username: user
+    password: password
+    url: r2dbc:postgresql://localhost:5432/polardb_order
+    pool:
+      max-create-connection-time: 2s    # 풀에서 연결 객체 하나를 얻을 때까지 기다릴 수 있는 최대한의 시간
+      initial-size: 5
+      max-size: 10
