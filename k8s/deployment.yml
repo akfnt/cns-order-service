@@ -5,7 +5,7 @@ metadata:
   labels:                                 # 배포에 추가할 레이블의 집합
     app: cns-order-service              # 이 배포는 'app=cns-order-service' 라는 레이블을 갖는다
 spec:
-  replicas: 2                             # 몇 개의 파드 복제본을 배포할 것인지 설정한다
+  replicas: 1                             # 몇 개의 파드 복제본을 배포할 것인지 설정한다
   selector:                               # 확장할 파드를 선택하기 위해 사용할 레이블을 정의한다
     matchLabels:
       app: cns-order-service
