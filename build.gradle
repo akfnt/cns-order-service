@@ -17,6 +17,7 @@ repositories {
 
 ext {
 	set('springCloudVersion', "2023.0.1")
+	set('testcontainersVersion', "1.19.3")
 }
 
 // 프로젝트를 빌드할때 그래들이 설정 프로세서를 사용하도록 설정
