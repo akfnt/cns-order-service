@@ -43,6 +43,13 @@ spring:
         dispatchOrder-in-0:
           destination: order-dispatched
           group: ${spring.application.name}
+        acceptOrder-out-0:
+          destination: order-accepted
+      rabbit:                           # 스프링 클라우드 스트림 바인딩에 대한 rabbitmq 설정
+        bindings:
+          acceptOrder-out-0:
+            producer:
+              transacted: true          # acceptOrder-out-0 바인딩에 대한 트랜잭션 지원 활성화
   rabbitmq:
     host: localhost
     port: 5672
