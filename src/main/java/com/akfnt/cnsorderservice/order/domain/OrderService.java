@@ -2,6 +2,7 @@ package com.akfnt.cnsorderservice.order.domain;
 
 import com.akfnt.cnsorderservice.book.Book;
 import com.akfnt.cnsorderservice.book.BookClient;
+import com.akfnt.cnsorderservice.order.event.OrderDispatchedMessage;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -33,5 +34,25 @@ public class OrderService {
     }
     public static Order buildRejectedOrder(String bookIsbn, int quantity) {
         return Order.of(bookIsbn, null, null, quantity, OrderStatus.REJECTED);
+    }
+
+    public Flux<Order> consumeOrderDispatchedEvent(Flux<OrderDispatchedMessage> flux) {
+        return flux.flatMap(message -> orderRepository.findById(message.orderId()))
+                .map(this::buildDispatchedOrder)
+                .flatMap(orderRepository::save);
+    }
+
+    private Order buildDispatchedOrder(Order existingOrder) {
+        return new Order(
+                existingOrder.id(),
+                existingOrder.bookIsbn(),
+                existingOrder.bookName(),
+                existingOrder.bookPrice(),
+                existingOrder.quantity(),
+                OrderStatus.DISPATCHED,
+                existingOrder.createdDate(),
+                existingOrder.lastModifiedDate(),
+                existingOrder.version()
+        );
     }
 }
