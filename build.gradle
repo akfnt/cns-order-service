@@ -18,6 +18,7 @@ repositories {
 ext {
 	set('springCloudVersion', "2023.0.1")
 	set('testcontainersVersion', "1.19.3")
+	set('testKeycloakVersion', "3.2.0")
 }
 
 // 프로젝트를 빌드할때 그래들이 설정 프로세서를 사용하도록 설정
@@ -53,6 +54,9 @@ dependencies {
 	testImplementation 'org.testcontainers:r2dbc'
 	testImplementation 'com.squareup.okhttp3:mockwebserver'
 	testImplementation 'org.springframework.cloud:spring-cloud-stream-test-binder'
+	testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation 'org.testcontainers:junit-jupiter'
+	testImplementation "com.github.dasniko:testcontainers-keycloak:${testKeycloakVersion}"
 }
 
 dependencyManagement {
