@@ -56,6 +56,11 @@ spring:
     username: user
     password: password
     connection-timeout: 5s
+  security:
+    oauth2:
+      resourceserver:
+        jwt: # OAuth2 는 액세스토큰에 대한 데이터 형식을 강제로 규정하지 않기 때문에 어떤 형식을 사용할지 명시적으로 지정해야 한다.
+          issuer-uri: http://localhost:8080/realms/PolarBookshop   # 특정 영역에 대한 모든 관련 OAuth2 엔드포인트 정보를 제공하는 키클록 URL
 
 polar:
   catalog-service-uri: "http://localhost:9001"
