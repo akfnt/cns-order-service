@@ -37,3 +37,5 @@ spec:
             value: "jdbc:postgresql://polar-postgres/polardb_order"
           - name: POLAR_CATALOG_SERVICE_URI
             value: "http://cns-catalog-service"
+          - name: SPRING_RABBITMQ_HOST
+            value: "polar-rabbitmq"
