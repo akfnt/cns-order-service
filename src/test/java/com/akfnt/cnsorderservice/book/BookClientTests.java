@@ -2,9 +2,7 @@ package com.akfnt.cnsorderservice.book;
 
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -13,7 +11,7 @@ import reactor.test.StepVerifier;
 
 import java.io.IOException;
 
-
+@TestMethodOrder(MethodOrderer.Random.class)
 class BookClientTests {
     private MockWebServer mockWebServer;
     private BookClient bookClient;
@@ -42,14 +40,14 @@ class BookClientTests {
         var mockResponse = new MockResponse()
                 .addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .setBody("""
-                        {
-                            "isbn": %s,
-                            "title": "Title",
-                            "author": "Author",
-                            "price": 9.90,
-                            "publisher": "Polarsophia"
-                        }
-                        """.formatted(bookIsbn));
+							{
+								"isbn": %s,
+								"title": "Title",
+								"author": "Author",
+								"price": 9.90,
+								"publisher": "Polarsophia"
+							}
+						""".formatted(bookIsbn));
 
         mockWebServer.enqueue(mockResponse);
 
@@ -58,7 +56,6 @@ class BookClientTests {
         StepVerifier.create(book)   // BookClient 가 반환하는 객체로 StepVerifier 객체를 초기화 한다
                 .expectNextMatches(b -> b.isbn().equals(bookIsbn))
                 .verifyComplete();
-
     }
 
     @Test
