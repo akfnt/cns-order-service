@@ -15,6 +15,7 @@ public class SecurityConfig {
     SecurityWebFilterChain filterChain(ServerHttpSecurity http) {
         return http
                 .authorizeExchange(exchange -> exchange
+                        .pathMatchers("/actuator/**").permitAll()    // 임시적으로 스프링 부트 액추에이터 엔드포인트에 인증되지 않은 액세스를 허용한다
                         .anyExchange().authenticated())                         // 모든 요청은 인증이 필요하다
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(Customizer.withDefaults()))                        // JWT 에 기반한 기본 설정을 사용해 OAuth2 리소스 서버 지원을 활성화한다(JWT 인증)
