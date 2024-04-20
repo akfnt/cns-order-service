@@ -4,17 +4,16 @@ import com.akfnt.cnsorderservice.book.Book;
 import com.akfnt.cnsorderservice.book.BookClient;
 import com.akfnt.cnsorderservice.order.event.OrderAcceptedMessage;
 import com.akfnt.cnsorderservice.order.event.OrderDispatchedMessage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+@Slf4j
 @Service
 public class OrderService {
-    private static final Logger log = LoggerFactory.getLogger(OrderService.class);
     private final BookClient bookClient;
     private final OrderRepository orderRepository;
     private final StreamBridge streamBridge;
