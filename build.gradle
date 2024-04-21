@@ -19,6 +19,7 @@ ext {
 	set('springCloudVersion', "2023.0.1")
 	set('testcontainersVersion', "1.19.3")
 	set('testKeycloakVersion', "3.2.0")
+	set('otelVersion', "1.32.0")
 }
 
 // 프로젝트를 빌드할때 그래들이 설정 프로세서를 사용하도록 설정
@@ -48,6 +49,7 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok:1.18.32'
 	annotationProcessor 'org.projectlombok:lombok:1.18.32'
 	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+	runtimeOnly "io.opentelemetry.javaagent:opentelemetry-javaagent:${otelVersion}"		// 바이트코드를 통해 동적으로 자바 코드를 계측하는 오픈텔레메트리 에이전트
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.boot:spring-boot-testcontainers'
