@@ -43,7 +43,7 @@ spec:
         volumeMounts:
           - name: cns-order-config-volume
             mountPath: /workspace/config
-        volumes:
-          - name: cns-order-config-volume
-            configMap:
-              name: cns-order-config
+      volumes:
+        - name: cns-order-config-volume
+          configMap:
+            name: cns-order-config
