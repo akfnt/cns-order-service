@@ -28,23 +28,6 @@ spec:
               command: [ "sh", "-c", "sleep 5" ]
         ports:
           - containerPort: 9002           # 컨테이너에 의해 노출되는 포트
-        env:                              # 파드로 전달되는 환경변수의 목록
-          - name: BPL_JVM_THREAD_COUNT
-            value: "50"
-          - name: SPRING_CLOUD_CONFIG_URI
-            value: "http://cns-config-service"
-          - name: SPRING_CLOUD_CONFIG_FAIL-FAST
-            value: "true"
-          - name: SPRING_R2DBC_URL
-            value: "r2dbc:postgresql://polar-postgres/polardb_order"
-          - name: SPRING_FLYWAY_URL
-            value: "jdbc:postgresql://polar-postgres/polardb_order"
-          - name: POLAR_CATALOG_SERVICE_URI
-            value: "http://cns-catalog-service"
-          - name: SPRING_RABBITMQ_HOST
-            value: "polar-rabbitmq"
-          - name: SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI
-            value: "http://polar-keycloak/realms/PolarBookshop"
         livenessProbe:
           httpGet:
             path: /actuator/health/liveness
@@ -57,3 +40,10 @@ spec:
             port: 9002
           initialDelaySeconds: 5
           periodSeconds: 15
+        volumeMounts:
+          - name: cns-order-config-volume
+            mountPath: /workspace/config
+        volumes:
+          - name: cns-order-config-volume
+            configMap:
+              name: cns-order-config
