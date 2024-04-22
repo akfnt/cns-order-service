@@ -9,7 +9,7 @@ spring:
   application:
     name: cns-order-service
   config:
-    import: "optional:configserver:"
+    import: ""                          # config service 로부터 설정 데이터를 임포트 하는 것을 중지. 다시 config service 를 사용하고 싶다면 "optional:configserver:" 을 추가
   lifecycle:
     timeout-per-shutdown-phase: 15s     # 15초간의 우아한 종료기간을 둔다
   r2dbc:
@@ -26,6 +26,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/polardb_order
   cloud:
     config:
+      enabled: false                    # 스프링 클라우드 컨피그 클라이언트 통합을 비활성화
       uri: http://localhost:8888
       request-connect-timeout: 5000     # 설정 서버에 연결될 때까지 기다리는 시간(밀리초)
       request-read-timeout: 5000        # 설정 서버에서 설정 데이터를 읽을 때까지 기다리는 시간(밀리초)
